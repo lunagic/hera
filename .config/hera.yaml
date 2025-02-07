@@ -1,0 +1,14 @@
+# Note: this file is just used for testing
+services:
+  ping:
+    command: ping 8.8.8.8
+  ls:
+    command: ls -1
+    watch:
+      - .
+    exclude:
+      - .config
+  php-server:
+    command: php -S 0.0.0.0:8000
+    watch:
+      - .config

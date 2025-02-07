@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -Eeuox pipefail
+
+cd ../../aaronellington/clubhouse
+go run /Users/aaron/Projects/lunagic/hera
