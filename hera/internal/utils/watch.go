@@ -2,29 +2,16 @@ package utils
 
 import (
 	"log"
-	"os"
-	"strings"
 	"time"
 
 	"github.com/radovskyb/watcher"
 )
 
-func Watch(paths []string, ignores []string, worker func(name string) error) {
-	ignores = append(ignores, "/.git")
+func Watch(worker func(name string) error) {
 
 	w := watcher.New()
 
 	w.SetMaxEvents(1)
-
-	w.AddFilterHook(func(info os.FileInfo, fullPath string) error {
-		for _, ignore := range ignores {
-			if strings.Contains(fullPath, ignore) {
-				return watcher.ErrSkip
-			}
-		}
-
-		return nil
-	})
 
 	go func() {
 		for {
@@ -39,11 +26,8 @@ func Watch(paths []string, ignores []string, worker func(name string) error) {
 		}
 	}()
 
-	for _, path := range paths {
-		if err := w.AddRecursive(path); err != nil {
-			log.Fatalln(err)
-		}
-
+	if err := w.AddRecursive("."); err != nil {
+		log.Fatalln(err)
 	}
 
 	if err := w.Start(time.Millisecond * 100); err != nil {

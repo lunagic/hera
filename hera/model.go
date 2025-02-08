@@ -11,18 +11,25 @@ func newModel(
 	updateFunc func(),
 	fileChangedFunc func(title string),
 ) tea.Model {
+	config.prime()
+
+	go utils.Watch(
+		func(fileName string) error {
+			for serviceName, service := range config.Services {
+				if !service.shouldTriggerUpdate(fileName) {
+					continue
+				}
+
+				fileChangedFunc(serviceName)
+			}
+			return nil
+		},
+	)
+
 	return &rootModel{
 		commandTabs: func() []*commandTab {
 			commandTabs := []*commandTab{}
 			for serviceName, service := range config.Services {
-				go utils.Watch(
-					service.Watch,
-					service.Exclude,
-					func(fileName string) error {
-						fileChangedFunc(serviceName)
-						return nil
-					},
-				)
 				commandTabs = append(
 					commandTabs,
 					newCommandTab(
