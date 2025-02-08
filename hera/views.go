@@ -13,7 +13,7 @@ var (
 			Padding(0, 1, 0, 1).
 			Bold(true).Border(lipgloss.HiddenBorder())
 
-	activeTabStyle = tabStyle.BorderForeground(lipgloss.NoColor{}).Border(lipgloss.NormalBorder())
+	activeTabStyle = tabStyle.BorderForeground(lipgloss.NoColor{}).Border(lipgloss.RoundedBorder())
 )
 
 func (model *rootModel) viewHelp() string {
