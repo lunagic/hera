@@ -18,6 +18,11 @@ func (model *rootModel) handleKeyMsg(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 		model.ActiveTab().viewport.LineUp(model.ViewportHeight())
 	case "pgdown":
 		model.ActiveTab().viewport.LineDown(model.ViewportHeight())
+	case "ctrl+l":
+		model.ActiveTab().commandOutput = ""
+		model.ActiveTab().viewport.SetContent("")
+	case "ctrl+b":
+		model.ActiveTab().viewport.GotoBottom()
 	case "ctrl+r":
 		return model, model.ActiveTab().Init()
 	case "ctrl+c", "q":

@@ -19,7 +19,10 @@ var (
 func (model *rootModel) viewHelp() string {
 	instructions := []string{
 		"exit: ctrl-c",
+		"change tab: left/right arrow",
 		"restart tab: ctrl-r",
+		"clear tab: ctrl-l",
+		"goto bottom: ctrl-b",
 	}
 
 	return helpStyle.Render(strings.Join(instructions, "  ;  "))
