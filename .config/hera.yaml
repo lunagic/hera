@@ -3,9 +3,9 @@ services:
   ping:
     command: ping 8.8.8.8
   ls:
-    command: ls -1
+    command: sleep 1 && ls -1
     watch:
-      - .
+      - .env
     exclude:
       - .config
   php-server:

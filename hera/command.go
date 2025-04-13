@@ -10,6 +10,7 @@ import (
 
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 	"github.com/fatih/color"
 	"github.com/lunagic/hera/hera/internal/utils"
 )
@@ -143,7 +144,11 @@ func (c *commandTab) Write(status string, s string) {
 	// Actually make the changes to the state
 	c.status = status
 	c.commandOutput += s
-	c.viewport.SetContent(c.commandOutput)
+
+	// Pre-wrap the lines so jit line wrapping doesn't confuse the viewport knowing how many lines to the bottom
+	wrapped := lipgloss.NewStyle().Width(c.viewport.Width).Render(c.commandOutput)
+
+	c.viewport.SetContent(wrapped)
 
 	// Move to the bottom if we were already at the bottom
 	if atBottom {
