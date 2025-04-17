@@ -3,6 +3,7 @@ package hera
 import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/fatih/color"
 	"github.com/lunagic/hera/hera/internal/utils"
 )
 
@@ -88,7 +89,7 @@ func (model *rootModel) View() string {
 	return lipgloss.JoinVertical(
 		lipgloss.Top,
 		model.viewTabs(),
-		model.ActiveTab().viewport.View(),
+		color.New(color.Reset).Sprint("")+model.ActiveTab().viewport.View()+color.New(color.Reset).Sprint(""),
 		model.viewHelp(),
 	)
 }
