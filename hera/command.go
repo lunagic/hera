@@ -101,10 +101,6 @@ func (c *commandTab) Init() tea.Cmd {
 			reader(ptyFile)
 		}()
 
-		c.Write(
-			"🔵",
-			[]byte(messageColor.Sprintf("waiting: %s", c.Command)),
-		)
 		wg.Wait()
 
 		if err := c.cmd.Wait(); err != nil {
