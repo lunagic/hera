@@ -23,6 +23,7 @@ func (model *rootModel) viewHelp() string {
 		"restart tab: ctrl-r",
 		"clear tab: ctrl-l",
 		"goto bottom: ctrl-b",
+		"toggle mouse: ctrl-a",
 	}
 
 	return helpStyle.Render(strings.Join(instructions, "  ;  "))

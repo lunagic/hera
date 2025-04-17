@@ -46,9 +46,16 @@ func newModel(
 	}
 }
 
+type tabPos struct {
+	start int // starting x position (column) of a tab header
+	width int // width of the rendered tab header
+}
+
 type rootModel struct {
 	commandTabs    []*commandTab
+	mouseEnabled   bool
 	activeTabIndex int
+	tabPositions   []tabPos
 	terminalWidth  int
 	terminalHeight int
 }
@@ -57,8 +64,16 @@ func (model *rootModel) Init() tea.Cmd {
 	return tea.Batch(
 		func() []tea.Cmd {
 			commandTabs := []tea.Cmd{}
+			x := 0
 			for _, commandTab := range model.commandTabs {
+				padding := 7
 				commandTabs = append(commandTabs, commandTab.Init())
+				width := len(commandTab.Title) + padding
+				model.tabPositions = append(model.tabPositions, tabPos{
+					start: x,
+					width: width,
+				})
+				x += width
 			}
 
 			return commandTabs
@@ -68,6 +83,18 @@ func (model *rootModel) Init() tea.Cmd {
 
 func (model *rootModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
+	case tea.MouseMsg:
+		if tea.MouseActionPress == msg.Action {
+			for i, pos := range model.tabPositions {
+				if msg.Y >= 3 {
+					return model, nil
+				}
+				if msg.X >= pos.start && msg.X < pos.start+pos.width {
+					model.activeTabIndex = i
+					return model, nil
+				}
+			}
+		}
 	case tea.KeyMsg:
 		return model.handleKeyMsg(msg)
 	case eventFileChanged:

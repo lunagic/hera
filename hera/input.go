@@ -25,6 +25,14 @@ func (model *rootModel) handleKeyMsg(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 		model.ActiveTab().viewport.GotoBottom()
 	case "ctrl+r":
 		return model, model.ActiveTab().Init()
+	case "ctrl+a":
+		if model.mouseEnabled {
+			return model, tea.DisableMouse
+		}
+
+		model.mouseEnabled = true
+
+		return model, tea.EnableMouseAllMotion
 	case "ctrl+c", "q":
 		for _, tab := range model.commandTabs {
 			tab.processTracker.KillAll()
