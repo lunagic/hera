@@ -27,7 +27,6 @@ func (model *rootModel) PreviousTab() {
 func (model *rootModel) ViewportHeight() int {
 	tabHeight := 3
 	separatorHeight := 1
-	helpHeight := 1
 
-	return model.terminalHeight - tabHeight - separatorHeight - helpHeight
+	return model.terminalHeight - tabHeight - separatorHeight
 }

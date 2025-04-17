@@ -48,6 +48,10 @@ type commandTab struct {
 }
 
 func (c *commandTab) Init() tea.Cmd {
+	if c.Command == "" {
+		return nil
+	}
+
 	c.processTracker.KillAll()
 
 	return func() tea.Msg {

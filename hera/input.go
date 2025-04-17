@@ -35,6 +35,9 @@ func (model *rootModel) handleKeyMsg(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 		return model, tea.EnableMouseAllMotion
 	case "ctrl+c", "q":
 		for _, tab := range model.commandTabs {
+			if tab.processTracker == nil {
+				continue
+			}
 			tab.processTracker.KillAll()
 		}
 

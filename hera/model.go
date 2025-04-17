@@ -1,6 +1,7 @@
 package hera
 
 import (
+	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/fatih/color"
@@ -40,6 +41,17 @@ func newModel(
 					),
 				)
 			}
+
+			commandTabs = append(commandTabs, &commandTab{
+				triggerRefresh: updateFunc,
+				Title:          "help",
+				status:         "❔",
+				viewport: func() viewport.Model {
+					vp := viewport.New(0, 0)
+					vp.SetContent(viewHelp())
+					return vp
+				}(),
+			})
 
 			return commandTabs
 		}(),
@@ -117,6 +129,5 @@ func (model *rootModel) View() string {
 		lipgloss.Top,
 		model.viewTabs(),
 		color.New(color.Reset).Sprint("")+model.ActiveTab().viewport.View()+color.New(color.Reset).Sprint(""),
-		model.viewHelp(),
 	)
 }

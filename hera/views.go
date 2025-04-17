@@ -16,7 +16,7 @@ var (
 	activeTabStyle = tabStyle.BorderForeground(lipgloss.NoColor{}).Border(lipgloss.RoundedBorder())
 )
 
-func (model *rootModel) viewHelp() string {
+func viewHelp() string {
 	instructions := []string{
 		"exit: ctrl-c",
 		"change tab: left/right arrow",
@@ -26,7 +26,7 @@ func (model *rootModel) viewHelp() string {
 		"toggle mouse: ctrl-a",
 	}
 
-	return helpStyle.Render(strings.Join(instructions, "  ;  "))
+	return helpStyle.Render(strings.Join(instructions, "\n"))
 }
 
 func (model *rootModel) viewTabs() string {
