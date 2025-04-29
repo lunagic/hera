@@ -29,7 +29,7 @@ func (p *ProcessTracker) kill(pid int) {
 	p.mutex.Lock()
 	defer p.mutex.Unlock()
 
-	syscall.Kill(-pid, syscall.SIGKILL)
+	_ = syscall.Kill(-pid, syscall.SIGKILL)
 	delete(p.pids, pid)
 }
 

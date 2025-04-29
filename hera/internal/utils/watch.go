@@ -17,7 +17,7 @@ func Watch(worker func(name string) error) {
 		for {
 			select {
 			case event := <-w.Event:
-				worker(event.Path)
+				_ = worker(event.Path)
 			case err := <-w.Error:
 				log.Fatalln(err)
 			case <-w.Closed:
