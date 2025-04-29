@@ -26,13 +26,14 @@ func (model *rootModel) handleKeyMsg(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 	case "ctrl+r":
 		return model, model.ActiveTab().Init()
 	case "ctrl+a":
-		if model.mouseEnabled {
+		model.mouseEnabled = !model.mouseEnabled
+
+		if !model.mouseEnabled {
 			return model, tea.DisableMouse
+		} else {
+			return model, tea.EnableMouseAllMotion
 		}
 
-		model.mouseEnabled = true
-
-		return model, tea.EnableMouseAllMotion
 	case "ctrl+c", "q":
 		for _, tab := range model.commandTabs {
 			if tab.processTracker == nil {
