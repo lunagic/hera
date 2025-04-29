@@ -15,14 +15,12 @@ func Start(args ...string) {
 		EnableMouseByDefault: false,
 	}
 
-	if err := utils.MustReadYamlConfig([]string{
+	_ = utils.MustReadYamlConfig([]string{
 		func() string {
 			homeDir, _ := os.UserHomeDir()
 			return homeDir + "/.config/lunagic/hera/config.yaml"
 		}(),
-	}, &userConfig); err != nil {
-		// Do nothing as it's optional
-	}
+	}, &userConfig)
 
 	config := Config{}
 
