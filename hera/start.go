@@ -11,6 +11,19 @@ import (
 )
 
 func Start(args ...string) {
+	userConfig := UserConfig{
+		EnableMouseByDefault: false,
+	}
+
+	if err := utils.MustReadYamlConfig([]string{
+		func() string {
+			homeDir, _ := os.UserHomeDir()
+			return homeDir + "/.config/lunagic/hera/config.yaml"
+		}(),
+	}, &userConfig); err != nil {
+		// Do nothing as it's optional
+	}
+
 	config := Config{}
 
 	if err := utils.MustReadYamlConfig(
@@ -36,6 +49,7 @@ func Start(args ...string) {
 
 	program := tea.NewProgram(nil)
 	model := newModel(
+		userConfig,
 		config,
 		func() {
 			program.Send(eventCommandOutput{})

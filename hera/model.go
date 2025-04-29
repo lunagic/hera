@@ -9,6 +9,7 @@ import (
 )
 
 func newModel(
+	userConfig UserConfig,
 	config Config,
 	updateFunc func(),
 	fileChangedFunc func(title string),
@@ -29,6 +30,7 @@ func newModel(
 	)
 
 	return &rootModel{
+		mouseEnabled: userConfig.EnableMouseByDefault,
 		commandTabs: func() []*commandTab {
 			commandTabs := []*commandTab{}
 			for serviceName, service := range config.Services {
@@ -76,6 +78,13 @@ func (model *rootModel) Init() tea.Cmd {
 	return tea.Batch(
 		func() []tea.Cmd {
 			commandTabs := []tea.Cmd{}
+
+			if model.mouseEnabled {
+				commandTabs = append(commandTabs, tea.EnableMouseAllMotion)
+			} else {
+				commandTabs = append(commandTabs, tea.DisableMouse)
+			}
+
 			x := 0
 			for _, commandTab := range model.commandTabs {
 				padding := 7
