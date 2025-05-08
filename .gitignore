@@ -10,5 +10,4 @@
 
 # Go
 __debug_bin*
-# Added by goreleaser init:
-dist/
+dist
