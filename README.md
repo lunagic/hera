@@ -2,6 +2,10 @@
 
 Development Environment Overseer
 
+[![Validate](https://github.com/lunagic/hera/actions/workflows/validate.yml/badge.svg)](https://github.com/lunagic/hera/actions/workflows/validate.yml)
+[![Go Reference](https://pkg.go.dev/badge/github.com/lunagic/hera.svg)](https://pkg.go.dev/github.com/lunagic/hera)
+[![Go Report Card](https://goreportcard.com/badge/github.com/lunagic/hera)](https://goreportcard.com/report/github.com/lunagic/hera)
+
 ## Installation
 
 ```shell
