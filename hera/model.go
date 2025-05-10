@@ -1,6 +1,8 @@
 package hera
 
 import (
+	"slices"
+
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
@@ -43,6 +45,16 @@ func newModel(
 					),
 				)
 			}
+
+			slices.SortFunc(commandTabs, func(a *commandTab, b *commandTab) int {
+				if a.Title > b.Title {
+					return 1
+				} else if a.Title < b.Title {
+					return -1
+				} else {
+					return 0
+				}
+			})
 
 			commandTabs = append(commandTabs, &commandTab{
 				triggerRefresh: updateFunc,
