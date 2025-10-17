@@ -2,6 +2,7 @@ package hera
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"strings"
 )
@@ -54,6 +55,13 @@ func (service *Service) shouldTriggerUpdate(fileName string) bool {
 
 	for _, path := range service.prefixesToWatch {
 		if strings.Contains(fileName, path) {
+			file, err := os.OpenFile(".config/tmp/hera.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+			if err != nil {
+				panic(err)
+			}
+
+			log.New(file, "", log.LstdFlags).Println(fileName)
+			file.Close()
 			return true
 		}
 	}
