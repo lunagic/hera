@@ -61,7 +61,10 @@ func (service *Service) shouldTriggerUpdate(fileName string) bool {
 			}
 
 			log.New(file, "", log.LstdFlags).Println(fileName)
-			file.Close()
+			if err := file.Close(); err != nil {
+				panic(err)
+			}
+
 			return true
 		}
 	}
